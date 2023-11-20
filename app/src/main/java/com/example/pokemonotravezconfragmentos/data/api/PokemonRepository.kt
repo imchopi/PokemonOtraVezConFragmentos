@@ -44,14 +44,25 @@ class PokemonRepository private constructor(private val api: PokemonApi) {
             val pokemonApiModel = PokemonApiModel(
                 id = detailResponse.id,
                 name = detailResponse.name,
-                front = detailResponse.sprites.front_default,
                 weight = detailResponse.weight,
                 height = detailResponse.height,
+                front = detailResponse.sprites.front_default,
             )
             detailedPokemonList.add(pokemonApiModel)
         }
 
         val pokemonListApiModel = PokemonListApiModel(detailedPokemonList)
         _pokemonList.postValue(pokemonListApiModel)
+    }
+
+    suspend fun getPokemonDetails(name: String): PokemonApiModel {
+        val detailResponse = api.fetchPokemon(name)
+        return PokemonApiModel(
+            detailResponse.id,
+            detailResponse.name,
+            detailResponse.weight,
+            detailResponse.height,
+            detailResponse.sprites.front_default,
+        )
     }
 }

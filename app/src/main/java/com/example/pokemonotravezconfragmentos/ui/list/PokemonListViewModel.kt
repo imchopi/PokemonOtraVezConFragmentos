@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokemonotravezconfragmentos.data.api.PokemonApiModel
 import com.example.pokemonotravezconfragmentos.data.api.PokemonListApiModel
 import com.example.pokemonotravezconfragmentos.data.api.PokemonListItemResponse
 import com.example.pokemonotravezconfragmentos.data.api.PokemonListResponse
@@ -26,7 +27,7 @@ class PokemonListViewModel(): ViewModel() {
     // Parte hecha en casa 1
     private val observer = Observer<PokemonListApiModel> { response ->
         _pokemonListUi.value = response.list.map {
-            pokemonApiModel -> Pokemon(pokemonApiModel.id,pokemonApiModel.name)
+            pokemonApiModel -> Pokemon(pokemonApiModel.id,pokemonApiModel.name, pokemonApiModel.weight, pokemonApiModel.height, pokemonApiModel.front)
         }
 
     }

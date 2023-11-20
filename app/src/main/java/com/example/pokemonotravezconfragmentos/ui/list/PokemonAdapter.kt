@@ -1,22 +1,24 @@
 package com.example.pokemonotravezconfragmentos.ui.list
 
 import android.view.LayoutInflater
-import android.view.View
+import coil.load
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemonotravezconfragmentos.data.model.Pokemon
 import com.example.pokemonotravezconfragmentos.databinding.ItemPokemonBinding
 
-class PokemonAdapter() :
+class PokemonAdapter(val onClick:((Pokemon)->Unit)) :
     ListAdapter<Pokemon,PokemonAdapter.PokemonViewHolder>(PokemonDiffCallback) {
 
     inner class PokemonViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindPokemon(p: Pokemon){
+            binding.imgViewPokemon.load(p.front)
             binding.textViewPokemonName.text = p.name
+            binding.root.setOnClickListener {
+                onClick(p)
+            }
         }
     }
 
